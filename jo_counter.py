@@ -1,19 +1,20 @@
 import streamlit as st
-import os
 import datetime
+import pytz
 import time
-# set local timezone to Paris
-os.environ["TZ"] = "Europe/Paris"
 
-# show remaining days before the olympics in Paris
-START_DATETIME = datetime.datetime(2024, 7, 26, 0, 0, 0)  # date and time of the opening of the olympics in Paris
+# set the timezone to Paris
+paris_tz = pytz.timezone('Europe/Paris')
 
-# show a big counter updating each second
+START_DATETIME = paris_tz.localize(datetime.datetime(2024, 7, 26, 0, 0, 0))
 
 def remaining_time():
-    """Returns the remaining time before the olympics in Paris
-    including days, hours, minutes and seconds"""
-    now = datetime.datetime.now()
+    """Renvoie le temps restant avant les Jeux Olympiques à Paris,
+    y compris les jours, les heures, les minutes et les secondes"""
+
+    # get the current time in Paris
+    now = datetime.datetime.now(paris_tz)
+    
     remaining = START_DATETIME - now
     return remaining
 
